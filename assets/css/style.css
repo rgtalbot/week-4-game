@@ -1,0 +1,73 @@
+body {
+	background-color: #001;
+	background-image: url("../images/background.jpg");
+	background-repeat: no-repeat;
+	background-size: 100%;
+}
+h1 {
+	font-size: 8em;
+	color: white;
+}
+.coder, .opponent, .player, .lostDriver {
+	border-radius: 5px;
+	color: white;
+	padding: 5px 15px;
+	text-align: center;
+}
+.coder, .lostDriver {
+	background-color: rgba(0, 0, 0, 0.3);
+}
+.opponent {
+	background-color: rgba(255, 0, 0, 0.3);
+}
+.player {
+	background-color: rgba(0, 255, 0, 0.3);
+}
+#drivers, #action, #player-header, #opponent-header, #pits-header {
+	color: white;
+	font-size: larger;
+	text-align: center;
+}
+#player-header, #opponent-header {
+	font-size: x-large;
+}
+.points, .coderName {
+	clear: both;
+	display: block;
+	margin: 5px;
+	color: white;
+	font-size: 24px;
+}
+.row {
+	margin: 15px;
+}
+h3 {
+	color: white;
+	size: xx-large;
+	text-align: center;
+}
+#race h2 {
+	background-color: rgba(0, 0, 0, 0.3);
+	border-radius: 15px;
+	color: white;
+	font-size: xx-large;
+	padding: 25px;
+	text-align: center;
+}
+
+#action {
+	color: white;
+	font-size: 48px;
+	background-color: rgba(0, 0, 0, 0.5);
+	border-radius: 5px;
+	margin: 20px auto;
+	text-align: center;
+}
+
+footer {
+	color: white;
+	font-size: 16px;
+	margin: 0 auto;
+	width: 960px;
+	text-align: center;
+}
