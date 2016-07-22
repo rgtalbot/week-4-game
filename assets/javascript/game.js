@@ -22,6 +22,13 @@ function coder (name, image, skill, codeSkill, debugSkill) {
   this.status = 'available';
 }
 
+function reset() {
+  location.reload();
+}
+
+$('button').hide();
+
+
 function showCoderList () {
   $('#coders').empty();
   for (var i = 0; i < coders.length; i++) {
@@ -91,12 +98,14 @@ function nextRound() {
 
 function gameOver() {
   $('#race').html('<h2>GAME OVER</h2>');
-  //needs a reset button
+  $('#opponents').empty();
+  $('button').show();
 }
 
 function playerWins() {
   $('#race').html('<h2>Winner! <span class="coderName">' + coders[player].name + '</span><img src="assets/images/' + coders[player].image +'"></h2>');
-  //needs a reset button
+  $('#opponents').empty();
+  $('button').show();
 }
 
 function refreshDisplay () {
@@ -104,7 +113,7 @@ function refreshDisplay () {
   if (player != -1) {
     showCoder(player);
     if (jrDev.length > 1) {
-      $('#action').html("Final race");
+      $('#action').html("Final Battle");
     } else if (jrDev.length > 0) {
       $('#action').html("Select your next opponent");
     } else {
@@ -115,7 +124,7 @@ function refreshDisplay () {
     showOpponent(opponent);
     if (jrDev.length < 2) {
       // Don't show this for the final race
-      $('#action').html("Start your engines!");
+      $('#action').html("START CODING!");
     }
   }
 }
@@ -147,6 +156,11 @@ $('#versus').on('click', function () {
   if (player > -1 && opponent > -1) {
     race();
   }
+});
+
+$('#button').on('click', function() {
+  reset();
+  // console.log('fuck me right');
 });
 
 showCoderList();
