@@ -30,8 +30,6 @@ h2 {
 
 .coder, .loser {
 	background-color: rgba(0, 0, 0, 0.7);
-	box-sizing: border-box;
-	margin: 5px;
 }
 
 .opponent {
