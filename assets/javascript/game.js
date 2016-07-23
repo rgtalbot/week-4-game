@@ -1,29 +1,27 @@
 $(document).ready(function() {
 
     var coders = new Array(4);
-    coders[0] = new coder('Ryan', 'ryan.jpg', 200, 22, 59);
-    coders[1] = new coder('Brent', 'brent.jpg', 200, 20, 35);
-    coders[2] = new coder('George', 'george.jpg', 200, 18, 24);
-    coders[3] = new coder('Bob', 'bob.jpg', 200, 16, 23);
+    coders[0] = new coder('Ryan', 'ryan.PNG', 1, 1, 1);
+    coders[1] = new coder('Brent', 'brent.PNG', 1, 1, 1);
+    coders[2] = new coder('George', 'george.PNG', 1, 1, 1);
+    coders[3] = new coder('Bob', 'bob.PNG', 1, 1, 1);
 
     var player = -1;
     var opponent = -1;
     var jrDev = new Array;
     var wins = 0;
 
-
     function coder(name, image, skill, codeSkill, debugSkill) {
         this.name = name;
         this.image = image;
-        this.skill = Math.floor(Math.random() * (250-150+1))+150;
-        this.codeSkill = Math.floor(Math.random() * (30-20+1))+20;
-        this.debugSkill = Math.floor(Math.random() * (50-20+1))+20;
+        this.skill = Math.floor(Math.random() * (300 - 200 + 1)) + 200;
+        this.codeSkill = Math.floor(Math.random() * (30 - 20 + 1)) + 20;
+        this.debugSkill = Math.floor(Math.random() * (25 - 15 + 1)) + 15;
         this.status = 'available';
     }
 
-
     $('button').hide();
-
+    $('#jrDev').hide();
 
     function showCoderList() {
         $('#coders').empty();
@@ -32,7 +30,7 @@ $(document).ready(function() {
                 var $newCoder = $('<div>')
                     .addClass('coder col-sm-3')
                     .attr('coder-id', i)
-                    .html('<span class="coderName"' + coders[i].name + '</span><img src="assets/images/' + coders[i].image + '"><span class="points">' + coders[i].skill + ' Skill</span>');
+                    .html('<span class="coderName">' + coders[i].name + '</span><img src="assets/images/' + coders[i].image + '"><span class="points">' + coders[i].skill + ' Skill</span>');
                 $('#coders').append($newCoder);
             }
         }
@@ -44,7 +42,7 @@ $(document).ready(function() {
     function showCoder(index) {
         var $newPlayer = $('<div>')
             .addClass('player col-sm-3 col-sm-offset-1')
-            .html('<span class="coderName">' + coders[index].name + coders[index].skill + '</span><img src="assets/images/' + coders[index].image + '"><span class="points">' + 'Code ' + coders[index].codeSkill + ' | Debug ' + coders[index].debugSkill + '</span>');
+            .html('<span class="coderName">' + coders[index].name + ' | ' + coders[index].skill + '</span><img src="assets/images/' + coders[index].image + '"><span class="points">' + 'Code ' + coders[index].codeSkill + ' | Debug ' + coders[index].debugSkill + '</span>');
         $('#player').html($newPlayer);
         $('#player-header').html('Player');
         $('#versus').html('<img src="assets/images/vs.png">');
@@ -53,13 +51,13 @@ $(document).ready(function() {
     function showOpponent(index) {
         var $newOpponent = $('<div>')
             .addClass('opponent col-sm-3 col-sm-offset-1')
-            .html('<span class="coderName">' + coders[index].name + coders[index].skill + '</span><img src="assets/images/' + coders[index].image + '"><span class="points">' + 'Code ' + coders[index].codeSkill + ' | Debug ' + coders[index].debugSkill + '</span>');
+            .html('<span class="coderName">' + coders[index].name + ' | ' + coders[index].skill + '</span><img src="assets/images/' + coders[index].image + '"><span class="points">' + 'Code ' + coders[index].codeSkill + ' | Debug ' + coders[index].debugSkill + '</span>');
         $('#opponent').html($newOpponent);
         $('#opponent-header').html('Opponent');
         $('#versus').html('<img src="assets/images/go.png">');
     }
 
-    function race() {
+    function code() {
         coders[opponent].skill = coders[opponent].skill - coders[player].codeSkill;
         coders[player].skill = coders[player].skill - coders[opponent].debugSkill;
         if (coders[opponent].skill < 1) {
@@ -70,11 +68,12 @@ $(document).ready(function() {
         } else if (coders[player].skill < 1) {
             //opponent wins
             coders[player].skill = 0;
-            $('#race').html('<h2>GAME OVER</h2>');
+            $('#code').html('<h2>GAME OVER<br/>YOU LOST</h2>');
             $('#opponents').empty();
+            $('#loserRow').hide();
             $('button').show();
         }
-        coders[player].codeSkill = coders[player].codeSkill + 3;
+        coders[player].codeSkill = coders[player].codeSkill + 8;
         refreshDisplay();
     }
 
@@ -82,12 +81,13 @@ $(document).ready(function() {
         jrDev.push(opponent);
         wins++;
         if (wins > 2) {
-            $('#race').html('<h2>Winner! <span class="coderName">' + coders[player].name + '</span><img src="assets/images/' + coders[player].image + '"></h2>');
+            $('#code').html('<h2>Winner! <span class="coderName">' + coders[player].name + '</span><img src="assets/images/' + coders[player].image + '"></h2>');
             $('#opponents').empty();
             $('button').show();
+            $('#lost').empty();
+            showJrDev();
         } else {
             opponent = -1;
-            coders[player].skill = 200;
             $('#opponent').empty();
             refreshDisplay();
             $('#lost').empty();
@@ -116,11 +116,12 @@ $(document).ready(function() {
     }
 
     function showJrDev() {
+        $('#jrDev').show();
         for (var i = 0; i < coders.length; i++) {
             $('#lost').empty;
             if (coders[i].status == 'lost') {
                 var $lostDriver = $('<div>')
-                    .addClass('lostDriver col-sm-3 ')
+                    .addClass('loser col-sm-3 ')
                     .html('<span class="coderName">' + coders[i].name + '</span><img src="assets/images/' + coders[i].image + '"><span> </span>');
                 $('#lost').append($lostDriver);
             }
@@ -140,7 +141,7 @@ $(document).ready(function() {
 
     $('#versus').on('click', function() {
         if (player > -1 && opponent > -1) {
-            race();
+            code();
         }
     });
 
